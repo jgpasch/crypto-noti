@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import Nexmo from 'nexmo';
 // local
 import keys from '../keys';
-import initRoutes from './routes';
+import subscriptionRoutes from './routes';
 import { initWatch } from './poloSetup';
 import { watchData } from './watchObject';
 
@@ -14,10 +14,16 @@ import { watchData } from './watchObject';
  */
 const app = express();
 
-app.use(bodyParser.json({ type: '*/*' }));
-initRoutes(app);
+mongoose.connect('mongodb://localhost/crypto_noti', (err) => {
+  if (err) {
+    throw new Error('can\'t connect to mongo');
+  }
+});
 
-initWatch(watchData);
+app.use(bodyParser.json({ type: '*/*' }));
+app.use('/subscriptions', subscriptionRoutes);
+
+// initWatch(watchData);
 
 
 app.listen(8000, () => {
