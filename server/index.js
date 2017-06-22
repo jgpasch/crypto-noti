@@ -5,8 +5,13 @@ import Nexmo from 'nexmo';
 // local
 import keys from '../keys';
 import subscriptionRoutes from './routes';
+import singleSubscriptionRoutes from './singleSubscriptionRoutes';
+import authRoutes from './authRoutes';
 import { initWatch } from './poloSetup';
 import { watchData } from './watchObject';
+import passport from 'passport';
+import passportService from './services/passport';
+const requireAuth = passport.authenticate('jwt', { session: false });
 
 /**
  * Setup express
@@ -21,7 +26,9 @@ mongoose.connect('mongodb://localhost/crypto_noti', (err) => {
 });
 
 app.use(bodyParser.json({ type: '*/*' }));
-app.use('/subscriptions', subscriptionRoutes);
+app.use('/subscriptions', requireAuth, subscriptionRoutes);
+app.use('/subscription', requireAuth, singleSubscriptionRoutes);
+app.use('/auth', authRoutes);
 
 // initWatch(watchData);
 

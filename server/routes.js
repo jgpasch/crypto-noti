@@ -6,39 +6,20 @@ router.get('/test', (req, res) => {
   res.send({hello: 'world'});
 });
 
-router.post('/create', (req, res) => {
-  // create subscription with
-  // req.body
-  console.log(req.body);
-  const { token, percent, minVal, maxVal, MinMaxPercentChange } = req.body;
-  const sub = new Subscription({
-    token,
-    percent,
-    minVal,
-    maxVal,
-    MinMaxPercentChange
+/**
+ * GET all subscriptions
+ */
+router.get('/', (req, res) => {
+  console.log('inside this get');
+  Subscription.find({}, (err, data) => {
+    res.send(data);
   });
-
-  sub.save((err) => {
-    if (err) {
-      throw new Error('problem creating subscription');
-
-    }
-  });
-  res.send({data: 'success'});
-
 });
 
-router.put('/:id/update', (req, res) => {
-  // create subscription with
-  // req.body
-  res.send({data: `updating object: ${req.params.id}`});
-});
-
-router.delete('/:id/delete', (req, res) => {
-  // create subscription with
-  // req.body
-  res.send({data: `deleting object: ${req.params.id}`});
+router.get('/:coin', (req, res) => {
+  Subscription.find({token: req.params.coin}, (err, data) => {
+    res.send(data);
+  });
 });
 
 export default router;
