@@ -34,9 +34,10 @@ router.post('/create', (req, res) => {
 
   sub.save((err, obj) => {
     if (err) {
-      throw new Error('problem creating subscription');
+      res.status(400).send({ error: err.errors});
+    } else {
+      res.send({data: obj});
     }
-    res.send({data: obj});
   });
 });
 

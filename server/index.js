@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import Nexmo from 'nexmo';
+import cors from 'cors';
 // local
 import keys from '../keys';
 import subscriptionRoutes from './routes';
@@ -24,6 +25,8 @@ mongoose.connect('mongodb://localhost/crypto_noti', (err) => {
     throw new Error('can\'t connect to mongo');
   }
 });
+
+app.use(cors());
 
 app.use(bodyParser.json({ type: '*/*' }));
 app.use('/subscriptions', requireAuth, subscriptionRoutes);

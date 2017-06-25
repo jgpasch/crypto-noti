@@ -7,8 +7,9 @@ function tokenForUser(user) {
 }
 
 function login(req, res, next) {
+  console.log('logging in user');
   // auth middleware complete, send user a token
-  res.send({ token: tokenForUser(req.user) });
+  res.send({ token: tokenForUser(req.user), user: req.user.email });
 }
 
 function signUp(req, res, next) {

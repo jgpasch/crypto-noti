@@ -7,6 +7,7 @@
     "autobahn": "^17.5.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
+    "cors": "^2.8.3",
     "express": "^4.15.3",
     "jwt-simple": "^0.5.1",
     "lodash": "^4.17.4",
